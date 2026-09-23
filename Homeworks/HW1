@@ -1,0 +1,96 @@
+using System;
+
+
+class Program
+{
+    static void Main()
+    {
+        List<string> list = new List<string>();
+
+        Console.WriteLine("Введите начальный баланс:");
+        int balance = Convert.ToInt32(Console.ReadLine());
+
+        int menu = 0;
+
+        while (menu != 5)
+        {
+            Console.WriteLine("1. Показать баланс");
+            Console.WriteLine("2. Пополнить счёт");
+            Console.WriteLine("3. Снять деньги");
+            Console.WriteLine("4. Показать историю операций");
+            Console.WriteLine("5. Выйти");
+
+            menu = Convert.ToInt32(Console.ReadLine());
+
+            if (menu == 1)
+            {
+                PrintBalance(balance);
+            }
+            else if (menu == 2)
+            {
+                balance = AddMoney(balance, list);
+            }
+            else if (menu == 3)
+            {
+                balance = TakeMoney(balance, list);
+            }
+            else if (menu == 4)
+            {
+                PrintHistory(list);
+            }
+        }
+    }
+
+    static int AddMoney(int balance, List<string> list)
+    {
+        Console.WriteLine("Введите сумму:");
+        int sum = Convert.ToInt32(Console.ReadLine());
+
+        if (sum > 0)
+        {
+            balance = balance + sum;
+            list.Add($"Пополнение: {sum}");
+        }
+        else
+        {
+            Console.WriteLine("Сумма должна быть больше нуля");
+        }
+
+        return balance;
+    }
+
+    static int TakeMoney(int balance, List<string> list)
+    {
+        Console.WriteLine("Введите сумму:");
+        int sum = Convert.ToInt32(Console.ReadLine());
+
+        if (sum <= 0)
+        {
+            Console.WriteLine("Сумма должна быть больше нуля");
+        }
+        else if (sum > balance)
+        {
+            Console.WriteLine("Недостаточно денег");
+        }
+        else
+        {
+            balance = balance - sum;
+            list.Add($"Снятие: {sum}");
+        }
+
+        return balance;
+    }
+
+    static void PrintBalance(int balance, string sign = "₽")
+    {
+        Console.WriteLine($"Баланс: {balance} {sign}");
+    }
+
+    static void PrintHistory(List<string> list)
+    {
+        for (int i = 0; i < list.Count; i++)
+        {
+            Console.WriteLine(list[i]);
+        }
+    }
+}
